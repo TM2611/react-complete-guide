@@ -1,98 +1,49 @@
-import "./ExpenseForm.css";
+import "./ExpenseForm.css"
 import { useState } from "react";
 
 const ExpenseForm = () => {
-  // ------------------- Method 1: Multiple states for form -----------------------------//
-
-  // const [enteredTitle, setEnteredTitle] = useState('')
-  // const [enteredAmount, setEnteredAmount] = useState('')
-  // const [enteredDate, setEnteredDate] = useState('')
-
-  // const titleChangeHandler = (e) => {
-  //     setEnteredTitle(e.target.value) -
-  // };
-
-  // const amountChangeHandler = (e) => {
-  //     // setEnteredAmount(e.target.value);
-  // };
-
-  // const dateChangeHandler = (e) => {
-  //     // setEnteredDate(e.target.value);
-  // };
-
-  // ------------------- Method 2: Single state for form -----------------------------//
-  const [userInput, setUserInput] = useState({
-    enteredTitle: "",
-    enteredAmount: "",
-    enteredDate: "",
-  });
-
-  const titleChangeHandler = (e) => {
-    /* 
-    React schedules state updates, so this method could potentially use an outdated value.
-    -- Bad practice.
-      
-    setUserInput({
-        ...userInput,
-        enteredTitle: e.target.value
-    })
-
+    const [enteredTitle, setEnteredTitle] = useState('')
+    const [enteredAmount, setEnteredAmount] = useState('')
+    const [enteredDate, setEnteredDate] = useState('')
     
-    Whenever updating state based on previous state, 
-    pass a anon function into setState function that will receive previous state and 
-    return new state by copying the old state and updating the relevant values
+    const titleChangeHandler = (e) => {
+        setEnteredTitle(e.target.value)
+    };
 
-    -- Good practice
-    */
-    setUserInput((prevState) => {
-      return { ...prevState, enteredTitle: e.target.value };
-    });
-  };
+    const amountChangeHandler = (e) => {
+        setEnteredAmount(e.target.value);
+    };
 
-  const amountChangeHandler = (e) => {
-    // setUserInput({
-    //   ...userInput,
-    //   enteredAmount: e.target.value,
-    // });
-    setUserInput((prevState) => {
-        return { ...prevState, enteredAmount: e.target.value };
-      });
-  };
+    const dateChangeHandler = (e) => {
+        setEnteredDate(e.target.value);
+    };
 
-  const dateChangeHandler = (e) => {
-    // setUserInput({
-    //   ...userInput,
-    //   enteredDate: e.target.value,
-    // });
-    setUserInput((prevState) => {
-        return { ...prevState, enteredDate: e.target.value };
-      });
-  };
+    const submitHandler = (e) => {
+        e.preventDefault();
+        const expenseData = {
+            title: enteredTitle,
+            amount: enteredAmount,
+            date: new Date(enteredDate)
+        }
+        console.log(expenseData);
+    };
+
+
 
   return (
-    <form>
+    <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeHandler} />
+          <input type="text" onChange={titleChangeHandler}/>
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
-          <input
-            type="number"
-            min="0.01"
-            step="0.01"
-            onChange={amountChangeHandler}
-          />
+          <input type="number" min="0.01" step="0.01" onChange={amountChangeHandler}/>
         </div>
         <div className="new-expense__control">
           <label>Date</label>
-          <input
-            type="date"
-            min="2019-01-01"
-            max="2022-12-31"
-            onChange={dateChangeHandler}
-          />
+          <input type="date" min="2019-01-01" max="2022-12-31" onChange={dateChangeHandler}/>
         </div>
       </div>
       <div className="new-expense__actions">
