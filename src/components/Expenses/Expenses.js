@@ -18,6 +18,7 @@ const Expenses = (props) => {
       <Card className="expenses">
         {expenses.map((expense) => (
           <ExpenseItem
+            key={expense.id} // Helps React identify which instances of a component have changed
             title={expense.title}
             amount={expense.amount}
             date={expense.date}
