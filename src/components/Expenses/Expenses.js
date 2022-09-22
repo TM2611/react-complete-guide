@@ -5,10 +5,12 @@ import Card from "../UI/Card";
 
 const Expenses = (props) => {
   const expenses = props.items;
-  const [selectedYear, setSelectedYear] = useState('2022');
+  const [selectedYear, setSelectedYear] = useState('2022'); //useState returns state and a function for updating state
   const selectYearHandler = (filteredYear) => {
     setSelectedYear(filteredYear);
+    // console.log(filteredYear); //shows old year value, as setSelectedYear *schedules* new yearto be changed
   };
+
 
   return (
     <div>
