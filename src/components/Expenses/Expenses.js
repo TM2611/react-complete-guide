@@ -16,8 +16,8 @@ const Expenses = (props) => {
 
   return (
     <div>
-      <ExpensesFilter selected={selectedYear} onSelectYearFilter={selectYearHandler} />
       <Card className="expenses">
+      <ExpensesFilter selected={selectedYear} onSelectYearFilter={selectYearHandler} />
         {filteredExpenses.map((expense) => (
           <ExpenseItem
             key={expense.id} // Helps React identify which instances of a component have changed
