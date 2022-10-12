@@ -22,7 +22,7 @@ const ExpenseForm = (props) => {
     e.preventDefault();
     const expenseData = {
       title: enteredTitle,
-      amount: enteredAmount,
+      amount: +enteredAmount,
       date: new Date(enteredDate),
     };
     props.onSubmitExpenseData(expenseData); //executes submitExpenseDataHandler function defined in parent component (NewExpense)
