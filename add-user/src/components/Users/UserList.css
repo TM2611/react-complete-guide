@@ -1,0 +1,8 @@
+.user-list__item{
+    list-style-type: none;
+    border: solid 1px grey;
+    border-width: 80%;
+    padding: 0.2rem;
+    margin-bottom: 1rem;
+}
+
