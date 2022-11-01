@@ -18,9 +18,10 @@ const Login = (props) => {
       );
     }, 500);
     return () => {
-        clearTimeout(timerID);
-    } //Cleanup function that runs just before whenever useEffect runs (excluding the first time useEffect runs)
-    //Also runs just before the component is removed
+      //Cleanup function that runs just before whenever useEffect runs (excluding the first time useEffect runs)
+      //Also runs just before the component is removed
+      clearTimeout(timerID);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
