@@ -49,9 +49,9 @@ const Login = (props) => {
     };
   }, []);
 
+  // object destructuring (with alias) to add object properties as dependencies to useEffect()
   const { isValid: emailIsValid} = emailState;
   const { isValid: passwordIsValid} = passwordState;
-
 
   useEffect(() => {
     const identifier = setTimeout(() => {
