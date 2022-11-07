@@ -1,6 +1,6 @@
 // Manage cart context data and provide to other components
 import React from 'react'
-import CartContext from './cart-context'
+import CartCtx from './cart-context'
 
 const CartProvider = (props) => {
 
@@ -19,9 +19,9 @@ const CartProvider = (props) => {
         removeItem: removeItemFromCartHandler
     }
   return (
-    <CartContext.Provider value={CartContext}>
+    <CartCtx.Provider value={CartContext}>
         {props.children}
-    </CartContext.Provider>
+    </CartCtx.Provider>
   )
 }
 
