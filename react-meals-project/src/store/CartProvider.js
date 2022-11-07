@@ -2,17 +2,17 @@
 import React, { useReducer } from "react";
 import CartCtx from "./cart-context";
 
-const initialState = {
+const initialCartState = {
   items: [],
   totalAmount: 0,
 };
 
-const cartReducer = (state = initialState, { type, payload }) => {
+const cartReducer = (state, { type, payload }) => {
   switch (type) {
     case "ADD_ITEM":
-      const updatedItems = state.items.concat(payload.item);
+      const updatedItems = state.items.concat(payload);
       const updatedTotalAmount =
-        state.totalAmount + payload.item.price * payload.item.amount;
+        state.totalAmount + payload.price * payload.amount;
       return { items: updatedItems, totalAmount: updatedTotalAmount };
 
     default:
@@ -21,7 +21,7 @@ const cartReducer = (state = initialState, { type, payload }) => {
 };
 
 const CartProvider = (props) => {
-  const [cartState, dispatchCartAction] = useReducer(cartReducer);
+  const [cartState, dispatchCartAction] = useReducer(cartReducer, initialCartState);
 
   const addItemToCartHandler = (item) => {
     dispatchCartAction({ type: "ADD_ITEM", payload: item });
