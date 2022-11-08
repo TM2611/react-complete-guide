@@ -10,7 +10,22 @@ const initialCartState = {
 const cartReducer = (state, { type, payload }) => {
   switch (type) {
     case "ADD_ITEM":
-      const updatedItems = state.items.concat(payload);
+      let updatedItems = {};
+      const existingCartItemIndex = state.items.findIndex(
+        (x) => x.id === payload.id
+      );
+
+      if (existingCartItemIndex !== -1) {
+        const existingCartItem = state.items[existingCartItemIndex];
+        const updatedItem = {
+          ...existingCartItem,
+          amount: existingCartItem.amount + payload.amount,
+        };
+        updatedItems = [...state.items];
+        updatedItems[existingCartItemIndex] = updatedItem;
+      } else {
+        updatedItems = state.items.concat(payload);
+      }
       const updatedTotalAmount =
         state.totalAmount + payload.price * payload.amount;
       return { items: updatedItems, totalAmount: updatedTotalAmount };
@@ -21,7 +36,10 @@ const cartReducer = (state, { type, payload }) => {
 };
 
 const CartProvider = (props) => {
-  const [cartState, dispatchCartAction] = useReducer(cartReducer, initialCartState);
+  const [cartState, dispatchCartAction] = useReducer(
+    cartReducer,
+    initialCartState
+  );
 
   const addItemToCartHandler = (item) => {
     dispatchCartAction({ type: "ADD_ITEM", payload: item });
