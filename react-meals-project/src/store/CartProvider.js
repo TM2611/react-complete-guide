@@ -9,8 +9,8 @@ const initialCartState = {
 
 const cartReducer = (state, { type, payload }) => {
   switch (type) {
-    case "ADD_ITEM":
-      let updatedItems = {};
+    case "ADD_ITEM": {
+      let updatedItems = [];
       const existingCartItemIndex = state.items.findIndex(
         (x) => x.id === payload.id
       );
@@ -29,6 +29,28 @@ const cartReducer = (state, { type, payload }) => {
       const updatedTotalAmount =
         state.totalAmount + payload.price * payload.amount;
       return { items: updatedItems, totalAmount: updatedTotalAmount };
+    }
+    case "REMOVE_ITEM": {
+      const selectedItemIndex = state.items.findIndex((x) => x.id === payload);
+      const selectedItem = state.items[selectedItemIndex];
+      let updatedItems;
+      let updatedTotalAmount = 0;
+      if (selectedItem.amount === 1) {
+        updatedItems = state.items.filter(x => x.id !== payload)
+        updatedTotalAmount =
+          state.totalAmount - selectedItem.price * selectedItem.amount;
+      }
+      else{
+        const updatedItem = {
+            ...selectedItem,
+            amount: selectedItem.amount - 1,
+          };
+          updatedItems = [...state.items];
+          updatedItems[selectedItemIndex] = updatedItem;
+          updatedTotalAmount = state.totalAmount - selectedItem.price;
+      }
+      return { items: updatedItems, totalAmount: updatedTotalAmount };
+    }
 
     default:
       return state;
