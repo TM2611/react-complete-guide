@@ -3,9 +3,9 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameInvalid, setEnteredNameInvalid] = useState(false);
-  const [enteredNameEdited, setEnteredNameEdited] = useState(false);
+  const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
-  const nameInputInvalid = enteredNameInvalid && enteredNameEdited
+  const nameInputInvalid = enteredNameInvalid && enteredNameTouched
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
@@ -14,7 +14,7 @@ const SimpleInput = (props) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    setEnteredNameEdited(true)
+    setEnteredNameTouched(true)
 
     if (enteredName.trim().length === 0) {
       setEnteredNameInvalid(true);
