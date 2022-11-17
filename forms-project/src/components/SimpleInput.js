@@ -1,26 +1,42 @@
 import { useState } from "react";
 
 const SimpleInput = (props) => {
-    const [enteredName, setEnteredName] = useState('')
+  const [enteredName, setEnteredName] = useState("");
+  const [enteredNameInvalid, setEnteredNameInvalid] = useState(false);
 
-    const nameInputChangeHandler = (e) =>{
-        setEnteredName(e.target.value)
+  const nameInputChangeHandler = (e) => {
+    setEnteredName(e.target.value);
+  };
+
+  const formSubmitHandler = (e) => {
+    e.preventDefault();
+
+    if (enteredName.trim().length === 0) {
+      setEnteredNameInvalid(true);
+      return;
     }
+    setEnteredNameInvalid(false);
+    console.log(enteredName);
+    setEnteredName("");
+  };
 
-    const formSubmitHandler = (e) =>{
-        e.preventDefault()
-
-        if (enteredName.trim().length === 0 ) {
-            return 
-        }
-        console.log(enteredName);
-        setEnteredName('');
-    }
+  const nameInputClasses = enteredNameInvalid
+    ? "form-control invalid"
+    : "form-control";
+    
   return (
     <form onSubmit={formSubmitHandler}>
-      <div className='form-control'>
-        <label htmlFor='name'>Your Name</label>
-        <input type='text' id='name' onChange={nameInputChangeHandler} value={enteredName}/>
+      <div className={nameInputClasses}>
+        <label htmlFor="name">Your Name</label>
+        <input
+          type="text"
+          id="name"
+          onChange={nameInputChangeHandler}
+          value={enteredName}
+        />
+        {enteredNameInvalid && (
+          <p className="error-text">Name must not be empty</p>
+        )}
       </div>
       <div className="form-actions">
         <button>Submit</button>
