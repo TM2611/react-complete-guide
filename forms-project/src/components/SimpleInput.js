@@ -3,6 +3,9 @@ import { useState } from "react";
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
   const [enteredNameInvalid, setEnteredNameInvalid] = useState(false);
+  const [enteredNameEdited, setEnteredNameEdited] = useState(false);
+
+  const nameInputInvalid = enteredNameInvalid && enteredNameEdited
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
@@ -10,6 +13,8 @@ const SimpleInput = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
+
+    setEnteredNameEdited(true)
 
     if (enteredName.trim().length === 0) {
       setEnteredNameInvalid(true);
@@ -20,7 +25,7 @@ const SimpleInput = (props) => {
     setEnteredName("");
   };
 
-  const nameInputClasses = enteredNameInvalid
+  const nameInputClasses = nameInputInvalid
     ? "form-control invalid"
     : "form-control";
     
@@ -34,7 +39,7 @@ const SimpleInput = (props) => {
           onChange={nameInputChangeHandler}
           value={enteredName}
         />
-        {enteredNameInvalid && (
+        {nameInputInvalid && (
           <p className="error-text">Name must not be empty</p>
         )}
       </div>
