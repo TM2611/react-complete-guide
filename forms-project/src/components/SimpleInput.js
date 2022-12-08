@@ -2,9 +2,9 @@ import { useState } from "react";
 
 const SimpleInput = (props) => {
   const [enteredName, setEnteredName] = useState("");
-  const [enteredNameInvalid, setEnteredNameInvalid] = useState(false);
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
+  const enteredNameInvalid = enteredName.trim().length === 0;
   const nameInputInvalid = enteredNameInvalid && enteredNameTouched
 
   const nameInputChangeHandler = (e) => {
@@ -14,11 +14,6 @@ const SimpleInput = (props) => {
   const nameInputBlurHandler = (e) => {
     setEnteredNameTouched(true);
 
-    if (enteredName.trim().length === 0) {
-        setEnteredNameInvalid(true);
-        return;
-      }
-
   };    
 
   const formSubmitHandler = (e) => {
@@ -26,13 +21,11 @@ const SimpleInput = (props) => {
 
     setEnteredNameTouched(true)
 
-    if (enteredName.trim().length === 0) {
-      setEnteredNameInvalid(true);
+    if (enteredNameInvalid) {
       return;
     }
-    setEnteredNameInvalid(false);
-    console.log(enteredName);
     setEnteredName("");
+    setEnteredNameTouched(false);
   };
 
   const nameInputClasses = nameInputInvalid
