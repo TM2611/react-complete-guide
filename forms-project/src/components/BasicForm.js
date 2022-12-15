@@ -3,17 +3,17 @@ const BasicForm = (props) => {
     <form>
       <div className='control-group'>
         <div className='form-control'>
-          <label htmlFor='name'>First Name</label>
-          <input type='text' id='name' />
+          <label htmlFor='fname'>First Name</label>
+          <input type='text' id='fname' />
         </div>
         <div className='form-control'>
-          <label htmlFor='name'>Last Name</label>
-          <input type='text' id='name' />
+          <label htmlFor='lname'>Last Name</label>
+          <input type='text' id='lname' />
         </div>
       </div>
       <div className='form-control'>
-        <label htmlFor='name'>E-Mail Address</label>
-        <input type='text' id='name' />
+        <label htmlFor='email'>E-Mail Address</label>
+        <input type='text' id='email' />
       </div>
       <div className='form-actions'>
         <button>Submit</button>
