@@ -5,7 +5,13 @@ const SimpleInput = (props) => {
   const [enteredNameTouched, setEnteredNameTouched] = useState(false);
 
   const enteredNameInvalid = enteredName.trim().length === 0;
-  const nameInputInvalid = enteredNameInvalid && enteredNameTouched
+  const nameInputInvalid = enteredNameInvalid && enteredNameTouched;
+
+  let formInvalid = false;
+
+  if (enteredNameInvalid) {
+    formInvalid = true;
+  }
 
   const nameInputChangeHandler = (e) => {
     setEnteredName(e.target.value);
@@ -13,13 +19,12 @@ const SimpleInput = (props) => {
 
   const nameInputBlurHandler = (e) => {
     setEnteredNameTouched(true);
-
-  };    
+  };
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    setEnteredNameTouched(true)
+    setEnteredNameTouched(true);
 
     if (enteredNameInvalid) {
       return;
@@ -31,7 +36,7 @@ const SimpleInput = (props) => {
   const nameInputClasses = nameInputInvalid
     ? "form-control invalid"
     : "form-control";
-    
+
   return (
     <form onSubmit={formSubmitHandler}>
       <div className={nameInputClasses}>
@@ -48,7 +53,7 @@ const SimpleInput = (props) => {
         )}
       </div>
       <div className="form-actions">
-        <button>Submit</button>
+        <button disabled={formInvalid}>Submit</button>
       </div>
     </form>
   );
