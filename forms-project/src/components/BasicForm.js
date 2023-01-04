@@ -1,53 +1,99 @@
-import { useState } from "react";
 import useInput from "../hooks/use-input-v2";
 
 const validateName = (name) => {
   return name.trim().length === 0;
 };
 
+const validateEmail = (email) => {
+  return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+};
+
 const BasicForm = (props) => {
   const {
     enteredValue: enteredFname,
     enteredValueInvalid: enteredFnameInvalid,
-    inputInvalid: fnameInputInvalid,
-    inputChangeHandler: nameChangeHandler,
-    inputBlurHandler: nameBlurHandler,
+    inputInvalid: fNameInputInvalid,
+    inputChangeHandler: fNameChangeHandler,
+    inputBlurHandler: fNameBlurHandler,
     reset: resetFname
   } = useInput(validateName);
 
+  const {
+    enteredValue: enteredLname,
+    enteredValueInvalid: enteredLnameInvalid,
+    inputInvalid: lNameInputInvalid,
+    inputChangeHandler: lNameChangeHandler,
+    inputBlurHandler: lNameBlurHandler,
+    reset: resetLname
+  } = useInput(validateName);
+
+  const {
+    enteredValue: enteredEmail,
+    enteredValueInvalid: enteredEmailInvalid,
+    inputInvalid: emailInputInvalid,
+    inputChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetEmail
+  } = useInput(validateEmail);
+
   const onSubmitHandler = (e) => {
-    if (enteredFnameInvalid) {
+    if (enteredFnameInvalid || enteredLnameInvalid || enteredEmailInvalid) {
         return;
     }
-    resetFname(); //enteredFname + isTouched
+    resetFname();
+    resetLname();
+    resetEmail();
 
   };
+
+  const firstNameClasses = fNameInputInvalid? 'form-control invalid' : 'form-control'
+  const lastNameClasses = lNameInputInvalid? 'form-control invalid' : 'form-control'
+  const emailClasses = emailInputInvalid? 'form-control invalid' : 'form-control'
+
+  let formInvalid = fNameInputInvalid || lNameInputInvalid || emailInputInvalid;
 
   return (
     <form>
       <div className="control-group">
-        <div className="form-control">
+        <div className={firstNameClasses}>
           <label htmlFor="fname">First Name</label>
           <input
             type="text"
             id="fname"
             value={enteredFname}
-            onChange={nameChangeHandler}
-            onBlur={nameBlurHandler}
+            onChange={fNameChangeHandler}
+            onBlur={fNameBlurHandler}
           />
-          {fnameInputInvalid && <p>Name must not be empty</p>}
+          {fNameInputInvalid && <p className="error-text">First name must not be empty</p>}
         </div>
-        <div className="form-control">
+        <div className={lastNameClasses}>
           <label htmlFor="lname">Last Name</label>
-          <input type="text" id="lname" />
+          <input
+            type="text"
+            id="lname"
+            value={enteredLname}
+            onChange={lNameChangeHandler}
+            onBlur={lNameBlurHandler}
+          />
+          {lNameInputInvalid && <p className="error-text">Last name must not be empty</p>}
         </div>
       </div>
-      <div className="form-control">
+      <div className={emailClasses}>
         <label htmlFor="email">E-Mail Address</label>
-        <input type="text" id="email" />
+        <input
+            type="text"
+            id="email"
+            value={enteredEmail}
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+          />
       </div>
       <div className="form-actions">
-        <button onSubmit={onSubmitHandler}>Submit</button>
+        <button disabled={formInvalid} onSubmit={onSubmitHandler}>Submit</button>
       </div>
     </form>
   );

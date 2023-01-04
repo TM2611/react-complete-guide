@@ -6,7 +6,7 @@ const useInput = (validateValue) => {
 
   const valueInvalid = validateValue(enteredValue);
   const inputInvalid = valueInvalid && isTouched;
-
+  
   const inputChangeHandler = (e) => {
     setEnteredValue(e.target.value);
   };
