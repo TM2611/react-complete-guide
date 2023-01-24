@@ -1,4 +1,4 @@
-import useInput from "../hooks/use-input-v2";
+import useInput from "../hooks/use-input-reducer";
 
 const isValidName = (name) => {
   return name.trim().length !== 0;
