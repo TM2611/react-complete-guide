@@ -1,10 +1,10 @@
 import useInput from "../hooks/use-input-v2";
 
-const validateName = (name) => {
-  return name.trim().length === 0;
+const isValidName = (name) => {
+  return name.trim().length !== 0;
 };
 
-const validateEmail = (email) => {
+const isValidEmail = (email) => {
   return String(email)
     .toLowerCase()
     .match(
@@ -20,7 +20,7 @@ const BasicForm = (props) => {
     inputChangeHandler: fNameChangeHandler,
     inputBlurHandler: fNameBlurHandler,
     reset: resetFname
-  } = useInput(validateName);
+  } = useInput(isValidName);
 
   const {
     enteredValue: enteredLname,
@@ -29,7 +29,7 @@ const BasicForm = (props) => {
     inputChangeHandler: lNameChangeHandler,
     inputBlurHandler: lNameBlurHandler,
     reset: resetLname
-  } = useInput(validateName);
+  } = useInput(isValidName);
 
   const {
     enteredValue: enteredEmail,
@@ -38,7 +38,7 @@ const BasicForm = (props) => {
     inputChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     reset: resetEmail
-  } = useInput(validateEmail);
+  } = useInput(isValidEmail);
 
   const onSubmitHandler = (e) => {
     if (enteredFnameInvalid || enteredLnameInvalid || enteredEmailInvalid) {
@@ -91,6 +91,7 @@ const BasicForm = (props) => {
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
           />
+          {emailInputInvalid && <p className="error-text">Please enter a valid email</p>}
       </div>
       <div className="form-actions">
         <button disabled={formInvalid} onSubmit={onSubmitHandler}>Submit</button>
